@@ -1,92 +1,115 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadeado Lógico</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f3f3f3;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .lock {
-            font-size: 50px;
-            color: red;
-        }
-        .unlocked {
-            color: green;
-        }
-        input {
-            padding: 10px;
-            margin-top: 10px;
-            text-align: center;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px;
-            margin-top: 10px;
-            background-color: blue;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: darkblue;
-        }
-        #message {
-            display: none;
-            margin-top: 20px;
-            font-size: 16px;
-            color: black;
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enigma César – Cifre “fisiologia”</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #eef2f5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    .lock {
+      font-size: 60px;
+      color: #c00;
+      transition: color 0.3s;
+      margin-bottom: 16px;
+    }
+    .unlocked {
+      color: #0a0;
+    }
+    .plaintext {
+      font-family: monospace;
+      font-size: 20px;
+      background: #f7f7f7;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    input {
+      width: calc(100% - 20px);
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #message {
+      display: none;
+      margin-top: 16px;
+      font-size: 16px;
+      color: #333;
+    }
+    #message a {
+      display: block;
+      margin-top: 8px;
+      color: blue;
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div id="lockIcon" class="lock">🔒</div>
-        <h2>Digite o Código</h2>
-        <input type="password" id="codeInput" placeholder="Digite o código">
-        <br>
-        <button onclick="checkCode()">Desbloquear</button>
-        <p id="message">Use a cifra de César chave 5 para decifrar esse texto.<br>
-        5-vzjgwj t tat;<br>
-        9-fgwf f ljqfijnwf;<br>
-        0-kjwajw rjcjw j ijutnx xjwanw, utw f rjxf<br>
-        5-ujlfw nslwjinjsyjx<br>
-        5-htqthfw tx nslwjinjsyjx sf ufsjqf<br>
-    </div>
+  <div class="container">
+    <div id="lockIcon" class="lock">🔒</div>
+    <h2>Enigma César</h2>
+    <p>Cifre esta palavra com César (chave 5):</p>
+    <div class="plaintext">fisiologia</div>
+    <p>Digite o texto cifrado:</p>
+    <input type="text" id="answer" placeholder="SEU CÓDIGO" maxlength="10"/>
+    <br/>
+    <button onclick="checkAnswer()">Desbloquear</button>
+    <p id="message">
+      🎉 Parabéns! Você cifrou corretamente.<br/>
+      <a href="https://eng-pablo-tec.github.io/enigma6" target="_blank">Próximo Enigma</a>
+    </p>
+  </div>
 
-    <script>
-        function checkCode() {
-            const correctCode = "235711";
-            const userCode = document.getElementById("codeInput").value;
-            const lockIcon = document.getElementById("lockIcon");
-            const message = document.getElementById("message");
-            
-            if (userCode === correctCode) {
-                lockIcon.textContent = "🔓";
-                lockIcon.classList.add("unlocked");
-                setTimeout(() => {
-                    message.style.display = "block";
-                }, 500);
-            } else {
-                lockIcon.textContent = "🔒";
-                lockIcon.classList.remove("unlocked");
-                message.style.display = "none";
-            }
-        }
-    </script>
+  <script>
+    function checkAnswer() {
+      const user = document.getElementById('answer').value.trim().toUpperCase();
+      const icon = document.getElementById('lockIcon');
+      const msg  = document.getElementById('message');
+      // "fisiologia" cifrado com chave 5 → "KNXNTQTLNF"
+      if (user === 'KNXNTQTLNF') {
+        icon.textContent = '🔓';
+        icon.classList.add('unlocked');
+        setTimeout(() => msg.style.display = 'block', 300);
+      } else {
+        icon.textContent = '🔒';
+        icon.classList.remove('unlocked');
+        msg.style.display = 'none';
+      }
+    }
+  </script>
 </body>
 </html>
